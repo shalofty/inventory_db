@@ -1,6 +1,6 @@
 import pymongo
 
-client = pymongo.MongoClient("mongodb+srv://shalofty:<PASSWORD>@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
 db = client['storefront']
 collection = db['items']
 
