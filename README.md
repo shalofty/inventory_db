@@ -2,7 +2,7 @@
 Simple Inventory Database
 
 This inventory system uses the PyMongo package. The database is stored on MongoDB Atlas.
-I have no included my username and password in the client. You will have to make a free account at MongoDB.com
+I didn't include a username and password in the client. You will have to make a free account at MongoDB.com
 
 To install PyMongo: pip install PyMongo
 
