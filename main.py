@@ -1,6 +1,7 @@
 import pymongo
 
-client = pymongo.MongoClient("mongodb+srv://USERNAME:PASSWORD@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(
+    "mongodb+srv://USERNAME:PASSWORD@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
 db = client['storefront']
 collection = db['items']
 
@@ -36,7 +37,7 @@ while prompt <= 1:
         itemBrand = itemBrand.upper()
 
         itemWeight = input("Item weight or capsule quantity: ")
-        itemWeight = itemWeight.upper()
+        itemWeight = int(itemWeight)
 
         itemQuant = input("Item quantity: ")
         itemQuant = int(itemQuant)
@@ -67,6 +68,7 @@ while prompt <= 1:
         else:
             print("You decided not to commit the item to the database.")
 
+
     def itemSearch():
 
         # Collecting user input to use for the search
@@ -84,19 +86,18 @@ while prompt <= 1:
         searchitem = str(searchitem).upper()
 
         # Formatting user input to match args for find_one
-        if searchtype == "NAME" or "INGREDIENT" or "BRAND":
+        if searchtype == "Name" or "Ingredient" or "Brand":
             searchoutput = collection.find_one({searchtype: searchitem})
             print("Congratulations! We found an item that matches your search: " + "'" + searchoutput["Name"] + "'")
 
-        for items in collection.find():
+            print("ID: " + searchoutput["_id"])
+            print("Name: " + searchoutput["Name"])
+            print("Main Ingredient: " + searchoutput["Ingredient"])
+            print("Brand: " + searchoutput["Brand"])
+            print("Weight or Quantity: " + searchoutput["Weight"])
+            searchoutput["Quant"] = str(searchoutput["Quant"])
+            print("In stock: " + searchoutput["Quant"])
 
-            print("ID: " + items["_id"])
-            print("Name: " + items["Name"])
-            print("Main Ingredient: " + items["Ingredient"])
-            print("Brand: " + items["Brand"])
-            print("Weight or Quantity: " + items["Weight"])
-            items["Quant"] = str(items["Quant"])
-            print("In stock: " + items["Quant"])
 
 
     # Comparing startingTask input statement from user
