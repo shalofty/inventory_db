@@ -1,6 +1,7 @@
 import pymongo
 
-client = pymongo.MongoClient("mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(
+    "mongodb+srv://USERNAME:PASSWORD@cluster0.nxzc2vh.mongodb.net/?retryWrites=true&w=majority")
 db = client['storefront']
 collection = db['items']
 
@@ -13,12 +14,11 @@ Which of the following would you like to do?
 To Add items type: ADD
 To Search for items type: SEARCH
 """)
-startingTask = input(">>>")
-startingTask = startingTask.upper()
+menuSelect = input(">>>")
+menuSelect = menuSelect.upper()
 
-# Comparing startingTask input statement from user
-# Adding items to the database
-if startingTask == "ADD":
+
+def addItem():
 
     print("""
     You've chose to add items to the database.
@@ -51,19 +51,60 @@ if startingTask == "ADD":
     print(itemQuant)
     print(mainIngr)
     print(upC)
+
     print("Would you like to save this item to the database? (Y/N")
     pushPost = input(">>>")
     pushPost = pushPost.upper()
 
     # Committing item to the database
     if pushPost == "YES" or "Y":
-        post = {'_id': upC, 'Name': itemName, "Brand": itemBrand, "Weight": itemWeight, "Quant": itemQuant, "Ingredient": mainIngr}
+        post = {'_id': upC, 'Name': itemName, "Brand": itemBrand, "Weight": itemWeight, "Quant": itemQuant,
+                "Ingredient": mainIngr}
         collection.insert_one(post)
     else:
         print("You decided not to commit the item to the database.")
 
+def itemsearch(self):
+
+    # Collecting user input to use for the search
+    print("""
+    How would you like to search:
+    Name, Ingredient, Brand
+    """)
+    searchtype = input(">>>")
+    searchtype = str(searchtype).capitalize()
+
+    print("""
+    What would you like to search for:
+    """)
+    searchitem = input(">>>")
+    searchitem = str(searchitem).upper()
+
+    # Formatting user input to match args for find_one
+    if searchtype == "NAME" or "INGREDIENT" or "BRAND":
+    searchoutput = collection.find_one({searchtype: searchitem})
+    print("Congratulations! We found an item that matches your search: " + "'" + searchoutput["Name"] + "'")
+
+    for items in collection.find():
+
+        print("ID: " + items["_id"])
+        print("Name: " + items["Name"])
+        print("Main Ingredient: " + items["Ingredient"])
+        print("Brand: " + items["Brand"])
+        print("Weight or Quantity: " + items["Weight"])
+        item["Quant"] = str(items["Quant"])
+        print("In stock: " + items["Quant"])
+
+
+
+# Comparing startingTask input statement from user
+# Adding items to the database
+if menuSelect == "ADD":
+    addItem()
+
+
 # Searching through items in the database
-elif startingTask == "SEARCH":
+elif menuSelect == "SEARCH":
 
     print("""
     You've chosen to search the database.
@@ -77,20 +118,6 @@ elif startingTask == "SEARCH":
 
     if searchType == "NAME":
 
-        print("What is it you're searching for?")
-        searchInput = input(">>>")
-        searchInput = str(searchInput)
-        searchOutput = collection.find_one({"Name": searchInput.upper()})
-        print("Congratulations! We found an item that matches your search: " + "'" + searchOutput["Name"] + "'")
-
-        for item in collection.find():
-            print("ID: " + item["_id"])
-            print("Name: " + item["Name"])
-            print("Main Ingredient: " + item["Ingredient"])
-            print("Brand: " + item["Brand"])
-            print("Weight or Quantity: " + item["Weight"])
-            item["Quant"] = str(item["Quant"])
-            print("In stock: " + item["Quant"])
 
     elif searchType == "BRAND":
 
