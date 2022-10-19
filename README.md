@@ -1,5 +1,7 @@
 # inventory_db
-Simple Inventory Database
+Simple Inventory Database Project
+Created by Stephan Haloftis
+
 
 This inventory system uses the PyMongo package. The database is stored on MongoDB Atlas.
 I didn't include a username and password in the client. You will have to make a free account at MongoDB.com
